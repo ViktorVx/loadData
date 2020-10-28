@@ -1,41 +1,30 @@
 package org.pva.loadData.controller;
 
+import org.pva.loadData.service.DownloadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.UUID;
-import java.util.stream.IntStream;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("file")
 public class LoadDataController {
 
-    private static final Integer defaultRows = 5;
+    private DownloadService downloadService;
 
-    @GetMapping(path = "download/{number}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity download(@PathVariable Integer number) throws IOException {
-        String fileName = UUID.randomUUID().toString().concat(".txt");
-
-        Files.write(Paths.get(fileName),
-                (Iterable<String>) IntStream.range(1, number == null ? defaultRows : number + 1)
-                        .mapToObj(i -> String.format("%s;Client%d;%d", UUID.randomUUID(), i, 100))::iterator
-                );
-        // todo create zip file in memory and remove file on disk
-        // todo try NOT to save txt file to the disk
-
-        return ResponseEntity.ok("ok ".concat(String.valueOf(number)));
+    @GetMapping(path = "download/{number}", produces = "application/zip")
+    @ResponseBody
+    public byte[] download(@PathVariable Integer number) {
+        return downloadService.makeZipFile(number);
     }
 
     @RequestMapping(path = "upload")
     public ResponseEntity upload() {
         return new ResponseEntity(null, HttpStatus.OK);
+    }
+
+    @Autowired
+    public void setDownloadService(DownloadService downloadService) {
+        this.downloadService = downloadService;
     }
 }

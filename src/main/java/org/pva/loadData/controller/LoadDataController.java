@@ -2,7 +2,6 @@ package org.pva.loadData.controller;
 
 import org.pva.loadData.service.DownloadService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,7 +9,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 
-@Controller
+@RestController
 @RequestMapping("file")
 public class LoadDataController {
 
@@ -37,9 +36,6 @@ public class LoadDataController {
         } else {
             return "Вам не удалось загрузить потому что файл пустой.";
         }
-        //todo create zip uploading
-        // unzipping
-        // to database storing
     }
 
     @Autowired

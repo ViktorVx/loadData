@@ -16,11 +16,21 @@ public class LoadDataController {
     private DownloadService downloadService;
     private UploadService uploadService;
 
+    /**
+     * Downloads zip file with list of clients
+     * @param number number of users
+     * @return zip file with list of clients
+     */
     @GetMapping(path = "download/{number}", produces = "application/zip")
     public byte[] download(@PathVariable Integer number) {
         return downloadService.makeZipFile(number);
     }
 
+    /**
+     * Loads zip file with clients and writes then to database
+     * @param file file with clients
+     * @return Time of method execution
+     */
     @PostMapping(path = "upload", consumes = "multipart/form-data")
     public String upload(@RequestParam("file") MultipartFile file) {
         long start = System.nanoTime();

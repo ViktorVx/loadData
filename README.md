@@ -30,3 +30,7 @@ Content-Type: multipart/form-data; boundary=WebAppBoundary
 --WebAppBoundary
 Content-Disposition: form-data; name="file"; filename="ts.zip"
 ```
+### Swagger
+```
+http://localhost:8080/swagger-ui.html
+```

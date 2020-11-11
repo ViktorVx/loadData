@@ -1,4 +1,4 @@
-package org.pva.loadData.config;
+package org.pva.loadData.config.swagger;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

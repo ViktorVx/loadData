@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface ClientRepository {
     List<Client> findAll();
-    int[] batchUpdate(List<Client> clients);
+    int[] batchInsert(List<Client> clients);
 }

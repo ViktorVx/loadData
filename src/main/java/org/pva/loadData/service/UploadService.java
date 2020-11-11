@@ -72,7 +72,7 @@ public class UploadService {
             String[] parts = s.split(";");
             clients.add(new Client(parts[0], parts[1], Long.valueOf(parts[2])));
         }
-        clientRepository.batchUpdate(clients);
+        clientRepository.batchInsert(clients);
     }
 
     @Autowired

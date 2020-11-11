@@ -34,7 +34,7 @@ public class ClientRepositoryImpl implements ClientRepository {
 
     @Override
     @Transactional
-    public int[] batchUpdate(List<Client> clients) {
+    public int[] batchInsert(List<Client> clients) {
         return jdbcTemplate.batchUpdate("INSERT INTO clients(id, login, balance) VALUES (?, ?, ?)",
                 new BatchPreparedStatementSetter() {
                     @Override
@@ -50,7 +50,7 @@ public class ClientRepositoryImpl implements ClientRepository {
                 });
     }
 
-    class ClientRowMapper implements RowMapper<Client> {
+    static class ClientRowMapper implements RowMapper<Client> {
 
         @Override
         public Client mapRow(final ResultSet rs, final int rowNum) throws SQLException {
